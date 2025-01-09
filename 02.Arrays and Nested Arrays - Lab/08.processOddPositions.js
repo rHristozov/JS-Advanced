@@ -1,0 +1,5 @@
+function processOddPositions() {
+
+}
+
+processOddPositions();

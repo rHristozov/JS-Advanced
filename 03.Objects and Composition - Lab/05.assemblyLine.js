@@ -1,22 +1,41 @@
-const assemblyLine = createAssemblyLine();
-
-function createAssemblyLine(obj) {
-    hasClima()
-}
-
-
-
-const myCar = {
-    make: 'Toyota',
-    model: 'Avensis'
-};
-
-
-function canPrint(device) {
-    device.print = () => {
-    console.log(`${device.name} is printing a page`);
-    }
-    }
-    const printer = { name: 'ACME Printer' };
-    canPrint(printer);
-    printer.print()
+function createAssemblyLine() {
+    return {
+      hasClima: (car) => {
+        car.temp = 21;
+        car.tempSettings = 21;
+        car.adjustTemp = () => {
+          if (car.temp < car.tempSettings) {
+            car.temp++;
+          } else if (car.temp > car.tempSettings) {
+            car.temp--;
+          }
+        };
+      },
+  
+      hasAudio: (car) => {
+        car.currentTrack = { name: '', artist: '' };
+        car.nowPlaying = () => {
+          if (car.currentTrack !== null) {
+            console.log(
+              `Now playing '${car.currentTrack.name}' by ${car.currentTrack.artist}`
+            );
+          }
+        };
+      },
+  
+      hasParktronic: (car) => {
+        car.checkDistance = (distance) => {
+          if (distance < 0.1) {
+            console.log('Beep! Beep! Beep!');
+          } else if (0.1 <= distance && distance < 0.25) {
+            console.log('Beep! Beep!');
+          } else if (0.25 <= distance && distance < 0.5) {
+            console.log('Beep!');
+          } else {
+            console.log('');
+          }
+        };
+      },
+    };
+  }
+  

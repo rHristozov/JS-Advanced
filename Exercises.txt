@@ -1,6 +1,4 @@
-
-
-dom events exercises - all
+dom events exercises - last 3
 advanced functions - all
 
 

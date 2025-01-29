@@ -1,4 +1,7 @@
-dom events exercises - last 3
-advanced functions - all
+dom events exercises - last 3*
+advanced functions- lab - all
+advanced functions- exercises - all
+Unit Testing and Error Handling - Lab
+Unit Testing and Error Handling - exercises
 
 

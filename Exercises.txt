@@ -4,3 +4,5 @@ Unit Testing and Error Handling - exercises - 7
 Classes - exercises- 5-13
 classes inherit - lab - all - 5
 
+total : 16
+

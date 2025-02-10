@@ -1,8 +1,8 @@
-dom events exercises - last 3*
-advanced functions- exercises - 4 and 10*
-Unit Testing and Error Handling - exercises - 7
-Classes - exercises- 5-13
-classes inherit - lab - all - 5
+dom events exercises - last 3* - dom
+advanced functions- exercises - 10* - dom
+Unit Testing and Error Handling - exercises - 7 - dom
+Classes - exercises- last 4 - dom
+Prep exam lab - 3
 
-total : 16
+total : 12
 

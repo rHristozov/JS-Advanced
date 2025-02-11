@@ -1,9 +1,8 @@
-dom events exercises - 9 - dom
 advanced functions- exercises - 10 - dom
 Unit Testing and Error Handling - exercises - 7 - dom
 Classes - exercises- last 4 - dom
 Prep exam lab - 3
 Prep exam exercises - 3
 
-total : 13
+total : 12
 

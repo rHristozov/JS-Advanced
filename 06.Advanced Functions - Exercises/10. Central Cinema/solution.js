@@ -1,74 +1,90 @@
 function solve() {
-    const onScreenBtn = document.querySelector('#container button')
-    const nameInputEl = document.querySelector('input[placeholder="Name"');
-    const hallInputEl = document.querySelector('input[placeholder="Hall"');
-    const ticketInputEl = document.querySelector('input[placeholder="Ticket Price"');
-    const ulMovies = document.querySelector('#movies ul');
-    const ulArchive = document.querySelector('#archive ul');
-    
-    onScreenBtn.addEventListener('click', onScreen);
+  const [name, hall, ticketPrice, onScreenBtn] =
+    document.getElementById('container').children;
+  const moviesUl = document.querySelector('#movies > ul');
+  const archive = document.getElementById('archive');
 
-    function onScreen(e) {
-        e.preventDefault();
-        const movieName = nameInputEl.value;
-        const movieHall = hallInputEl.value;
-        let moviePrice = ticketInputEl.value;
-        moviePrice = Number(moviePrice);
-
-        if(movieName === '' || movieHall === '' || moviePrice === '' || typeof moviePrice !== 'number' ) {
-            return;
-        }
-
-        const liElMovies = document.createElement('li');
-
-        const nameSpan = document.createElement('span');
-        nameSpan.textContent = movieName;
-        const strongHall = document.createElement('strong');
-        strongHall.textContent = movieHall;
-
-        const divEl = document.createElement('div');
-        const strongPrice = document.createElement('strong');
-        strongPrice.textContent = moviePrice.toFixed(2);
-        let inputEl = document.createElement('input');
-        inputEl.placeholder = 'Tickets Sold';
-        const btnArchive = document.createElement('button');
-        btnArchive.textContent = 'Archive';
-
-        divEl.append(strongPrice, inputEl, btnArchive);
-        liElMovies.append(nameSpan, strongHall, divEl);
-        ulMovies.appendChild(liElMovies);
-
-        nameInputEl.value = '';
-        hallInputEl.value = '';
-        ticketInputEl.value = '';
-
-        btnArchive.addEventListener('click', archive)
-
-        function archive() {
-            console.log('here');
-            
-            const ticketPrice = Number(inputEl.value);
-            if(ticketPrice <= 0 ) {
-                return;
-            }
-            const liElArchive = document.createElement('li');
-
-            const nameSpan = document.createElement('span');
-            nameSpan.textContent = movieName;
-            const strongTotal = document.createElement('strong')
-            strongTotal.textContent = `Total amount: ${(ticketPrice * moviePrice).toFixed(2)}`
-            const btnDelete = document.createElement('button');
-            btnDelete.textContent =  'Delete';
-
-            liElArchive.append(nameSpan, strongTotal, btnDelete);
-            ulMovies.remove(liElMovies)
-            ulArchive.append(liElArchive);
-
-            btnDelete.addEventListener('click', remove)
-
-            function remove() {
-                ulArchive.remove(liElArchive)
-            }
-        }
+  onScreenBtn.addEventListener('click', onScreen);
+  moviesUl.addEventListener('click', onArchive);
+  archive.addEventListener('click', onRemove);
+  function onScreen(e) {
+    e.preventDefault();
+    if (
+      name.value == '' ||
+      hall.value == '' ||
+      Number.isNaN(Number(ticketPrice.value)) ||
+      ticketPrice.value == ''
+    ) {
+      return;
     }
+    const price = Number(ticketPrice.value);
+    const movieDiv = el('div', {}, [
+      el('strong', {}, price.toFixed(2)),
+      el('input', { placeholder: 'Tickets Sold' }),
+      el('button', {}, 'Archive'),
+    ]);
+    const movieLi = el('li', {}, [
+      el('span', {}, name.value),
+      el('strong', {}, `Hall: ${hall.value}`),
+      movieDiv,
+    ]);
+    moviesUl.appendChild(movieLi);
+    document.getElementById('add-new').reset();
+  }
+  function onArchive(e) {
+    const clickedBtn = e.target;
+    const movieDiv = clickedBtn.parentElement;
+    const movieLi = movieDiv.parentElement;
+    const movieName = movieLi.querySelector('span').textContent;
+    const ticketsAmount = movieDiv.querySelector('input');
+
+    if (
+      clickedBtn.tagName == 'BUTTON' &&
+      clickedBtn.textContent == 'Archive' &&
+      !Number.isNaN(Number(ticketsAmount.value)) &&
+      ticketsAmount.value
+    ) {
+      const pricePerTicket = Number(
+        movieDiv.querySelector('strong').textContent
+      );
+      const totalAmount = (
+        pricePerTicket * Number(ticketsAmount.value)
+      ).toFixed(2);
+      const archiveLi = el('li', {}, [
+        el('span', {}, movieName),
+        el('strong', {}, `Total amount: ${totalAmount}`),
+        el('button', {}, 'Delete'),
+      ]);
+      archive.children[1].appendChild(archiveLi);
+      movieLi.remove();
+    }
+  }
+  function onRemove(e) {
+    const clickedBtn = e.target;
+    if (clickedBtn.tagName != 'BUTTON') {
+      return;
+    }
+    if (clickedBtn.textContent == 'Delete') {
+      clickedBtn.parentElement.remove();
+    } else if (clickedBtn.textContent == 'Clear') {
+      archive.children[1].replaceChildren();
+    }
+  }
+  // ! utility function to create HTML element
+  function el(type, attributes, children) {
+    const element = document.createElement(type);
+    if (attributes) {
+      for (const attribute in attributes) {
+        element[attribute] = attributes[attribute];
+      }
+    }
+    if (typeof children == 'object') {
+      for (each of children) {
+        element.appendChild(each);
+      }
+    } else if (typeof children == 'string') {
+      element.textContent = children;
+    }
+    return element;
+  }
 }

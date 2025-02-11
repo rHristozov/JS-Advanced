@@ -1,0 +1,16 @@
+{
+  "name": "12.string-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "mocha": "^11.1.0"
+  }
+}

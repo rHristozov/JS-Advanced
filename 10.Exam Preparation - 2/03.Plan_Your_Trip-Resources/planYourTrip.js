@@ -3,8 +3,8 @@ const planYourTrip = {
     if (year != 2024) {
       throw new Error(`Invalid Year!`);
     } else {
-      if (destination == "Ski Resort") {
-        if (season === "Winter") {
+      if (destination == 'Ski Resort') {
+        if (season === 'Winter') {
           return `Great choice! The ${season} is the perfect time to visit the ${destination}.`;
         } else {
           return `Consider visiting during the Winter for the best experience at the ${destination}.`;
@@ -24,26 +24,26 @@ const planYourTrip = {
       activityIndex < 0 ||
       activityIndex >= activities.length
     ) {
-      throw new Error("Invalid Information!");
+      throw new Error('Invalid Information!');
     }
     for (let i = 0; i < activities.length; i++) {
       if (i !== activityIndex) {
         result.push(activities[i]);
       }
     }
-    return result.join(", ");
+    return result.join(', ');
   },
 
   estimateExpenses(distanceInKilometers, fuelCostPerLiter) {
     let totalCost = (distanceInKilometers * fuelCostPerLiter).toFixed(2);
 
     if (
-      typeof distanceInKilometers !== "number" ||
+      typeof distanceInKilometers !== 'number' ||
       distanceInKilometers <= 0 ||
-      typeof fuelCostPerLiter !== "number" ||
+      typeof fuelCostPerLiter !== 'number' ||
       fuelCostPerLiter <= 0
     ) {
-      throw new Error("Invalid Information!");
+      throw new Error('Invalid Information!');
     } else if (totalCost <= 500) {
       return `The trip is budget-friendly, estimated cost is $${totalCost}.`;
     } else {
@@ -52,4 +52,4 @@ const planYourTrip = {
   },
 };
 
-module.exports = planYourTrip;
+export default planYourTrip;

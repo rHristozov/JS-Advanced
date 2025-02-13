@@ -7,51 +7,31 @@ function solve() {
   const placeEl = document.getElementById('place');
   const eventEl = document.getElementById('event-name');
   const contactEl = document.getElementById('email');
+
+  // ul
   const lastCheckedUL = document.getElementById('check-list');
   const upcomingUL = document.getElementById('upcoming-list');
-
-  //data storage
-  let inputData = {};
-
-  //li
+  const finishUL = document.getElementById('finished-list');
 
   // buttons
   const addEventBtn = document.getElementById('add-btn');
-  const editBtn = document.createElement('button');
-  editBtn.textContent = 'Edit';
-  editBtn.setAttribute('class', 'edit-btn');
-  const continueBtn = document.createElement('button');
-  continueBtn.textContent = 'Continue';
-  continueBtn.setAttribute('class', 'continue-btn');
-
-  //events
   addEventBtn.addEventListener('click', add);
-  editBtn.addEventListener('click', edit);
-  continueBtn.addEventListener('click', next);
+  const clearBtn = document.getElementById('clear');
+ 
 
   function add(e) {
     e.preventDefault();
-
-    //taking values
-    let time = timeEl.value;
-    let date = dateEl.value;
-    let place = placeEl.value;
-    let event = eventEl.value;
-    let contact = contactEl.value;
-
+ 
     //validation
     if (
-      time === '' ||
-      date === '' ||
-      place === '' ||
-      event === '' ||
-      contact === ''
+      timeEl.value === '' ||
+      dateEl.value === '' ||
+      placeEl.value === '' ||
+      eventEl.value === '' ||
+      contactEl.value === ''
     ) {
       return;
     }
-
-    //taking data
-    inputData = { time, date, place, event, contact };
 
     //creating elements
     const lastCheckedLI = document.createElement('li');
@@ -60,16 +40,23 @@ function solve() {
     const article = document.createElement('article');
 
     const pDate = document.createElement('p');
-    pDate.textContent = `Begins: ${date} at: ${time}`;
+    pDate.textContent = `Begins: ${dateEl.value} at: ${timeEl.value}`;
 
     const pPlace = document.createElement('p');
-    pPlace.textContent = `In: ${place}`;
+    pPlace.textContent = `In: ${placeEl.value}`;
 
     const pEvent = document.createElement('p');
-    pEvent.textContent = `Event: ${event}`;
+    pEvent.textContent = `Event: ${eventEl.value}`;
 
     const pContact = document.createElement('p');
-    pContact.textContent = `Contact: ${contact}`;
+    pContact.textContent = `Contact: ${contactEl.value}`;
+
+    const editBtn = document.createElement('button');
+    editBtn.textContent = 'Edit';
+    editBtn.setAttribute('class', 'edit-btn');
+    const continueBtn = document.createElement('button');
+    continueBtn.textContent = 'Continue';
+    continueBtn.setAttribute('class', 'continue-btn');
 
     //appending
     article.appendChild(pDate);
@@ -83,30 +70,70 @@ function solve() {
 
     lastCheckedUL.appendChild(lastCheckedLI);
 
+    let time = timeEl.value;
+    let date = dateEl.value;
+    let place = placeEl.value;
+    let event = eventEl.value;
+    let contact = contactEl.value;
+  
     //reset
-    addEventBtn.disabled = true;
     timeEl.value = '';
     dateEl.value = '';
     placeEl.value = '';
     eventEl.value = '';
     contactEl.value = '';
-  }
+    addEventBtn.disabled = true;
+    
+    editBtn.addEventListener('click', edit);
+    continueBtn.addEventListener('click', next);
 
-  function edit() {
-    addEventBtn.disabled = false;
-    timeEl.value = inputData.time;
-    dateEl.value = inputData.date;
-    placeEl.value = inputData.place;
-    eventEl.value = inputData.event;
-    contactEl.value = inputData.contact;
+    function edit() {
+      addEventBtn.disabled = false;
+      timeEl.value = time;
+      dateEl.value = date;
+      placeEl.value = place;
+      eventEl.value = event;
+      contactEl.value = contact;
+  
+      lastCheckedLI.remove()
+    }
 
-    lastCheckedUL.innerHTML = '';
-  }
+    function next() {
+      const upcomingLI = document.createElement('li');
+      upcomingLI.setAttribute('class', 'event-content');
+  
+      const newArticle = article.cloneNode(true);
+      const finishBtn = document.createElement('button');
+      finishBtn.textContent = 'Move to Finished';
+      finishBtn.setAttribute('class', 'finished-btn');
+  
+      //append
+      upcomingLI.appendChild(newArticle);
+      upcomingLI.appendChild(finishBtn);
+      upcomingUL.appendChild(upcomingLI);
 
-  function next() {
-    const upcomingLI = document.createElement('li');
-    upcomingLI.setAttribute('class', 'event-content');
+      lastCheckedLI.remove()
+      addEventBtn.disabled = false;
 
-    // upcomingUL.appendChild();
+      finishBtn.addEventListener('click', finishEvent)
+
+      function finishEvent() {
+        const finishLI = document.createElement('li');
+        finishLI.setAttribute('class', 'event-content');
+  
+        const newArticle = article.cloneNode(true);
+        
+        finishLI.appendChild(newArticle);
+        finishLI.appendChild(clearBtn);
+
+        finishUL.append(finishLI);
+  
+        upcomingLI.remove();
+
+        clearBtn.addEventListener('click', () => {
+          newArticle.remove();
+        })
+      }
+    }
   }
 }

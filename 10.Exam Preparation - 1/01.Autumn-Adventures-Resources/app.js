@@ -17,11 +17,10 @@ function solve() {
   const addEventBtn = document.getElementById('add-btn');
   addEventBtn.addEventListener('click', add);
   const clearBtn = document.getElementById('clear');
- 
 
   function add(e) {
     e.preventDefault();
- 
+
     //validation
     if (
       timeEl.value === '' ||
@@ -75,7 +74,7 @@ function solve() {
     let place = placeEl.value;
     let event = eventEl.value;
     let contact = contactEl.value;
-  
+
     //reset
     timeEl.value = '';
     dateEl.value = '';
@@ -83,7 +82,7 @@ function solve() {
     eventEl.value = '';
     contactEl.value = '';
     addEventBtn.disabled = true;
-    
+
     editBtn.addEventListener('click', edit);
     continueBtn.addEventListener('click', next);
 
@@ -94,45 +93,46 @@ function solve() {
       placeEl.value = place;
       eventEl.value = event;
       contactEl.value = contact;
-  
-      lastCheckedLI.remove()
+
+      lastCheckedLI.remove();
     }
 
     function next() {
       const upcomingLI = document.createElement('li');
       upcomingLI.setAttribute('class', 'event-content');
-  
-      const newArticle = article.cloneNode(true);
+
+      let newArticle = document.createElement('article');
+      newArticle = article;
       const finishBtn = document.createElement('button');
       finishBtn.textContent = 'Move to Finished';
       finishBtn.setAttribute('class', 'finished-btn');
-  
+
       //append
       upcomingLI.appendChild(newArticle);
       upcomingLI.appendChild(finishBtn);
       upcomingUL.appendChild(upcomingLI);
 
-      lastCheckedLI.remove()
+      lastCheckedLI.remove();
       addEventBtn.disabled = false;
 
-      finishBtn.addEventListener('click', finishEvent)
+      finishBtn.addEventListener('click', finishEvent);
 
       function finishEvent() {
         const finishLI = document.createElement('li');
         finishLI.setAttribute('class', 'event-content');
-  
-        const newArticle = article.cloneNode(true);
-        
-        finishLI.appendChild(newArticle);
-        finishLI.appendChild(clearBtn);
 
+        let newArticle = document.createElement('article');
+        newArticle = article;
+
+        finishLI.appendChild(newArticle);
         finishUL.append(finishLI);
-  
+
         upcomingLI.remove();
 
         clearBtn.addEventListener('click', () => {
-          newArticle.remove();
-        })
+          finishLI.remove();
+          addEventBtn.disabled = false;
+        });
       }
     }
   }
